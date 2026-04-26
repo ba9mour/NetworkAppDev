@@ -10,7 +10,7 @@
     <header class="navbar">
         <nav class="nav-links">
             <a href="index.html">
-                <img src="./img/logo.png" alt="Логотип самолета" class="nav-icon">
+                <img src="./img/plane-icon.png" alt="Логотип самолета" class="nav-icon">
                 <span>Главная</span>
             </a>
             <a href="calculator.html" class="active">Калькулятор</a>
@@ -23,39 +23,61 @@
     </header>
 
     <main class="content-wrapper">
-        <section class="calculator" aria-label="Калькулятор расчетов">
-            <div class="calc-display" id="result" aria-live="polite">0</div>
+        <div class="calc-controls" style="margin-right: 20px; display: flex; flex-direction: column; gap: 10px;">
+            <button id="change-bg-color" class="btn btn-outline" style="color: #1a1a1a; border-color: #1a1a1a;">Сменить фон</button>
+            <button id="change-result-color" class="btn btn-outline" style="color: #1a1a1a; border-color: #1a1a1a;">Цвет экрана</button>
+        </div>
+
+        <section class="calculator" id="calculator">
+            <div class="calc-display" id="result">0</div>
 
             <div class="calc-row">
-                <button class="calc-btn op" aria-label="Очистить">C</button>
-                <button class="calc-btn op" aria-label="Смена знака">+/-</button>
-                <button class="calc-btn op" aria-label="Процент">%</button>
-                <button class="calc-btn op" aria-label="Разделить">/</button>
+                <button class="calc-btn op">M+</button>
+                <button class="calc-btn op">M-</button>
+                <button class="calc-btn op">MR</button>
+               <button class="calc-btn op" title="В двоичный код">BIN</button>
+            </div>
+            
+            <div class="calc-row">
+                <button class="calc-btn op">x!</button>
+                <button class="calc-btn op">x²</button>
+                <button class="calc-btn op">√</button>
+                <button class="calc-btn op">←</button>
+            </div>
+
+            <div class="calc-row">
+                <button class="calc-btn op" id="btn_op_clear">C</button>
+                <button class="calc-btn op">+/-</button>
+                <button class="calc-btn op">%</button>
+                <button class="calc-btn op">/</button>
             </div>
             <div class="calc-row">
                 <button class="calc-btn">7</button>
                 <button class="calc-btn">8</button>
                 <button class="calc-btn">9</button>
-                <button class="calc-btn op" aria-label="Умножить">x</button>
+                <button class="calc-btn op">x</button>
             </div>
             <div class="calc-row">
                 <button class="calc-btn">4</button>
                 <button class="calc-btn">5</button>
                 <button class="calc-btn">6</button>
-                <button class="calc-btn op" aria-label="Вычесть">-</button>
+                <button class="calc-btn op">-</button>
             </div>
             <div class="calc-row">
                 <button class="calc-btn">1</button>
                 <button class="calc-btn">2</button>
                 <button class="calc-btn">3</button>
-                <button class="calc-btn op" aria-label="Сложить">+</button>
+                <button class="calc-btn op">+</button>
             </div>
             <div class="calc-row">
                 <button class="calc-btn">0</button>
-                <button class="calc-btn" aria-label="Десятичная точка">.</button>
-                <button class="calc-btn execute" aria-label="Вычислить">=</button>
+                <button class="calc-btn">000</button>
+                <button class="calc-btn">.</button>
+                <button class="calc-btn execute" id="btn_op_equal">=</button>
             </div>
         </section>
     </main>
+
+    <script src="./js/script.js"></script>
 </body>
 </html>

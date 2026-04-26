@@ -5,7 +5,7 @@
     --color-primary-dark: #0B192C;   /* Темно-синий, цвет хедера */
     --color-primary: #1E3E62;        /* Основной синий */
     --color-accent: #00A8E8;         /* Голубой акцентный (кнопки, ссылки) */
-    --color-text-main: #2C3338;      /* Темно-серый для текста (не чисто черный) */
+    --color-text-main: #2C3338;      /* Темно-серый для текста  */
     --color-bg-light: #F4F7F6;       /* Светлый фон страниц */
     --color-white: #FFFFFF;
     
@@ -272,4 +272,19 @@ mark {
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
     font-weight: bold;
+}
+
+
+body.alt-bg {
+    background-color: #2C3E50 !important; 
+}
+
+body.alt-bg .content-wrapper {
+    background-color: transparent;
+}
+
+.calc-display.res-alt-color {
+    background-color: #00A8E8;
+    color: white;
+    border-color: #0089BD;
 }
