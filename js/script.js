@@ -28,6 +28,23 @@ window.onload = function() {
         return str;
     }
 
+    // Перевод в 16-систему
+    function hexValue(decimalValue) {
+        let num = parseFloat(decimalValue);
+
+        let isNegative = num < 0;
+        let absNum = Math.abs(Math.trunc(num))
+
+        let hexText = absNum.toString(16).toUpperCase();
+        if (isNegative) hexText = "-" + hexText;
+
+        let hexColor = '#' + absNum.toString(16).padStart(6, '0').slice(-6);
+
+        outputElement.innerHTML = hexText;
+        outputElement.style.color = hexColor;
+    }
+
+
     // Обработчик нажатий на ВСЕ кнопки калькулятора
     calculator.addEventListener('click', function(event) {
         let currentBtn = event.target;
@@ -207,7 +224,8 @@ window.onload = function() {
         b = '';
         selectedOperation = null;
         isFinalResult = true;
-        outputElement.innerHTML = formatOutput(a);
+        // outputElement.innerHTML = formatOutput(a);
+        hexValue(a);
     };
 
     
