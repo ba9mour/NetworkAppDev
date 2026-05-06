@@ -1,0 +1,31 @@
+:root {
+    --aero-dark: #0B192C;
+    --aero-primary: #1E3E62;
+    --aero-accent: #00A8E8;
+}
+
+.navbar-aero {
+    background-color: var(--aero-dark) !important;
+}
+
+.btn-aero {
+    background-color: var(--aero-accent);
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+
+.btn-aero:hover {
+    background-color: #0089BD;
+    color: white;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
