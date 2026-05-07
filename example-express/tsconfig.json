@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",              // Целевая версия JavaScript для компиляции
+    "module": "commonjs",             // Система модулей (для Node.js используется CommonJS)
+    "rootDir": "./src",               // Корневая директория исходных файлов TypeScript
+    "outDir": "./dist",               // Директория для скомпилированных JavaScript файлов
+    "strict": true,                   // Включает все строгие проверки типов
+    "resolveJsonModule": true,        // Разрешает импорт JSON-файлов
+    "esModuleInterop": true           // Совместимость ES модулей с CommonJS
+  }
+}

@@ -1,0 +1,5 @@
+$kind: http-request
+name: карточкапо id
+url: ""
+method: GET
+order: 4070626054997181
