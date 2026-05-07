@@ -5,7 +5,7 @@ export class ProductCardComponent {
 
     getHTML(data) {
             return `
-                <div class="card h-100" style="width: 18rem;">
+                <div class="card" style="width: 18rem;">
                     <img src="${data.src}" class="card-img-top" alt="${data.title}" style="height: 200px; object-fit: cover;">
                     
                     <div class="card-body d-flex flex-column">
