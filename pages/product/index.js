@@ -24,7 +24,7 @@ export class ProductPage {
         `;
     }
 
-    // поиск детали по ID
+    // 1. GET-запрос: получаем данные для заполнения формы
     getData() {
         ajax.get(stockUrls.getStockById(this.id), (data, status) => {
             if (status === 200 && data) {
@@ -35,11 +35,48 @@ export class ProductPage {
         });
     }
 
-    // деталь
+    // 2. PATCH-запрос: отправляем измененные данные на сервер
+    saveData(updatedFields) {
+        // Меняем кнопку на состояние загрузки, чтобы пользователь не кликал дважды (UI/UX практика)
+        const saveBtn = document.getElementById('save-btn');
+        saveBtn.disabled = true;
+        saveBtn.innerText = 'Сохранение...';
+
+        ajax.patch(stockUrls.updateStockById(this.id), updatedFields, (response, status) => {
+            if (status === 200) {
+                // Если сервер ответил 200 OK, возвращаемся на главную страницу каталога
+                this.clickBack();
+            } else {
+                alert('Произошла ошибка при сохранении данных на сервере. Статус: ' + status);
+                saveBtn.disabled = false;
+                saveBtn.innerText = 'Сохранить изменения';
+            }
+        });
+    }
+
+// DELETE-запрос: удаляем запчасть
+    deleteData() {
+        const delBtn = document.getElementById('delete-btn');
+        delBtn.disabled = true;
+        delBtn.innerText = 'Удаление...';
+
+        ajax.delete(stockUrls.removeStockById(this.id), (response, status) => {
+            // Бэкенд на DELETE обычно возвращает статус 204 (No Content) или 200
+            if (status === 204 || status === 200) {
+                this.clickBack(); // Возвращаемся в каталог
+            } else {
+                alert('Ошибка при удалении. Статус: ' + status);
+                delBtn.disabled = false;
+                delBtn.innerText = 'Удалить';
+            }
+        });
+    }
+
     renderData(item) {
         this.pageRoot.innerHTML = '';
         const product = new ProductComponent(this.pageRoot);
-        product.render(item);
+        // Передаем оба коллбэка с жесткой привязкой контекста this
+        product.render(item, this.saveData.bind(this), this.deleteData.bind(this));
     }
 
     clickBack() {
@@ -53,7 +90,6 @@ export class ProductPage {
         const navbar = new NavbarComponent(this.parent);
         navbar.render();
 
-        // Создаем контейнер для кнопки назад, чтобы она не прилипала к контенту
         const backContainer = document.createElement('div');
         backContainer.className = 'container mt-4 mb-2';
         this.parent.appendChild(backContainer);
@@ -63,7 +99,6 @@ export class ProductPage {
 
         this.parent.insertAdjacentHTML('beforeend', this.getHTML());
         
-
         this.getData();
     }
 }
