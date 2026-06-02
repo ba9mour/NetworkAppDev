@@ -34,20 +34,29 @@ export class MainPage {
     }
 
     // getData принимает title
-    getData(title = '') {
-        ajax.get(stockUrls.getStocks(title), (data, status) => {
-            if (status === 200 && data) {
-                this.renderData(data);
-            } else {
-                console.error('Ошибка при получении данных с сервера. Статус:', status);
+    async getData(title = '') {
+            try {
+                const { data, status, ok } = await ajax.get(stockUrls.getStocks(title));
+
+                if (ok && data) {
+                    this.renderData(data);
+                } else {
+                    console.error('Ошибка при получении данных с сервера. Статус:', status);
+                    this.pageRoot.innerHTML = `
+                        <div class="alert alert-danger mt-5 text-center w-100" role="alert">
+                            Не удалось загрузить каталог запчастей. Код ошибки: ${status}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Сетевая ошибка (fetch):', error);
                 this.pageRoot.innerHTML = `
                     <div class="alert alert-danger mt-5 text-center w-100" role="alert">
-                        Не удалось загрузить каталог запчастей. Проверьте сервер.
+                        Ошибка соединения с бэкендом. Проверьте сеть.
                     </div>
                 `;
             }
-        });
-    }
+        }
 
     renderData(items) {
         this.pageRoot.innerHTML = '';

@@ -1,31 +1,27 @@
 class StockUrls {
     constructor() {
-        this.baseUrl = 'http://localhost:3000';
+        // http://localhost:3000/stocks'
+        this.baseUrl = '/stocks'; 
     }
 
     getStocks(title = '') {
-        const query = title ? `?title=${encodeURIComponent(title)}` : '';
-        return `${this.baseUrl}/stocks${query}`;
+        return title ? `${this.baseUrl}?title=${title}` : this.baseUrl;
     }
 
-    // Получить конкретную запчасть по ID
     getStockById(id) {
-        return `${this.baseUrl}/stocks/${id}`;
+        return `${this.baseUrl}/${id}`;
     }
 
-    // Создать новую запчасть (POST)
     createStock() {
-        return `${this.baseUrl}/stocks`;
+        return this.baseUrl;
     }
 
-    // Обновить запчасть (PATCH)
     updateStockById(id) {
-        return `${this.baseUrl}/stocks/${id}`;
+        return `${this.baseUrl}/${id}`;
     }
 
-    // Удалить запчасть (DELETE)
     removeStockById(id) {
-        return `${this.baseUrl}/stocks/${id}`;
+        return `${this.baseUrl}/${id}`;
     }
 }
 
