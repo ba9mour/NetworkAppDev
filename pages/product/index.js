@@ -28,6 +28,7 @@ export class ProductPage {
     getData() {
         ajax.get(stockUrls.getStockById(this.id), (data, status) => {
             if (status === 200 && data) {
+                this.originalData = data; // ЗАПОМНИЛИ ИСХОДНИК
                 this.renderData(data);
             } else {
                 this.pageRoot.innerHTML = '<h3 class="text-danger mt-5">Деталь не найдена или ошибка сервера</h3>';
@@ -35,21 +36,49 @@ export class ProductPage {
         });
     }
 
-    // 2. PATCH-запрос: отправляем измененные данные на сервер
+
     saveData(updatedFields) {
-        // Меняем кнопку на состояние загрузки, чтобы пользователь не кликал дважды (UI/UX практика)
         const saveBtn = document.getElementById('save-btn');
         saveBtn.disabled = true;
-        saveBtn.innerText = 'Сохранение...';
+        saveBtn.innerText = 'Обработка данных...';
 
-        ajax.patch(stockUrls.updateStockById(this.id), updatedFields, (response, status) => {
-            if (status === 200) {
-                // Если сервер ответил 200 OK, возвращаемся на главную страницу каталога
-                this.clickBack();
+        const tasks = [];
+
+        if (updatedFields.shortText !== this.originalData.shortText) {
+            tasks.push(new Promise((resolve) => {
+                ajax.patch(stockUrls.updateStockById(this.id), { shortText: updatedFields.shortText }, (res, status) => {
+                    console.log("Краткое описание обновлено моментально.");
+                    resolve(); 
+                });
+            }));
+        }
+
+        if (updatedFields.price !== this.originalData.price) {
+            tasks.push(new Promise((resolve) => {
+                setTimeout(() => {
+                    ajax.patch(stockUrls.updateStockById(this.id), { price: updatedFields.price }, (res, status) => {
+                        console.log("Цена обновлена с задержкой в 10 секунд.");
+                        resolve(); 
+                    });
+                }, 10000); 
+            }));
+        }
+
+        Promise.all(tasks).then(() => {
+            if (updatedFields.title !== this.originalData.title || updatedFields.fullText !== this.originalData.fullText) {
+                
+                ajax.patch(stockUrls.updateStockById(this.id), { 
+                    title: updatedFields.title,
+                    fullText: updatedFields.fullText 
+                }, (res, status) => {
+                    console.log("Название обновлено строго после остальных полей.");
+                    this.clickBack(); 
+                });
+                
             } else {
-                alert('Произошла ошибка при сохранении данных на сервере. Статус: ' + status);
-                saveBtn.disabled = false;
-                saveBtn.innerText = 'Сохранить изменения';
+
+                console.log("Название не менялось. Завершение работы.");
+                this.clickBack();
             }
         });
     }
